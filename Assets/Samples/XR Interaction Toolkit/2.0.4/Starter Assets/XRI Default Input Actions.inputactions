@@ -88,6 +88,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Joystick Pressed",
+                    "type": "Button",
+                    "id": "4e337153-f62d-4932-9ec3-9795d8a411a4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Joystick Unpressed",
+                    "type": "Button",
+                    "id": "cd06a16a-1616-4fc8-98f6-0e226b70009e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -198,6 +216,28 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Tracking State",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7dfce831-7e9d-4dde-a32b-36cf154180e5",
+                    "path": "<XRController>{LeftHand}/joystickClicked",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Joystick Pressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1200c432-b2d3-4c17-89b9-04569b33d123",
+                    "path": "<XRController>{LeftHand}/joystickClicked",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Joystick Unpressed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -606,6 +646,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "72939de0-2ed7-4f09-9956-a683ad378d0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Joystick Pressed",
+                    "type": "Button",
+                    "id": "f1ab3060-2d9c-488c-9536-bbb889e28515",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Joystick Unpressed",
+                    "type": "Button",
+                    "id": "8103ac9a-32c4-41aa-95e8-23823e863caa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -716,6 +783,39 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Tracking State",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b70fedcb-4bb2-40a7-abf7-5f28e7f63636",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1c9580e-d7a5-4f52-8454-58232cbe7eff",
+                    "path": "<XRController>{RightHand}/joystickClicked",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Joystick Pressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1aa36b6c-1e01-4b64-a77d-fac3d9d45e3b",
+                    "path": "<XRController>{RightHand}/joystickClicked",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Joystick Unpressed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
