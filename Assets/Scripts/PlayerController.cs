@@ -21,8 +21,9 @@ public class PlayerController : MonoBehaviour
     
 
     // This is a shortcut to run a function everytime you want to evaluate the bool:
+    // This needs to run a raycast collision with objects on a ground layer
     public bool IsGrounded => Physics.Raycast(
-        new Vector2(transform.position.x, transform.position.y + 2.0f),
+        new Vector3(transform.position.x, transform.position.y + 2.0f, transform.position.z),
         Vector3.down, 2.0f, ~playerLayer);
 
     void Start() {
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         col.height = xrOrigin.CameraInOriginSpaceHeight;
     }
 
+    // Add jump multiplier
     private void OnJump(InputAction.CallbackContext obj) {
         if (!IsGrounded) return;
         rb.AddForce(Vector3.up * jumpForce);
@@ -45,8 +47,10 @@ public class PlayerController : MonoBehaviour
 
     public void TeleportPlayer(Vector3 targetPos) {
         //Debug.Log("Player teleported");
-        //this.transform.position = targetPos;
-        StartCoroutine(TeleportNumerator(targetPos));
+        this.transform.position = targetPos;
+        
+        // I need to fix this lerping and add an effect if I want it in here
+        //StartCoroutine(TeleportNumerator(targetPos));
     }
 
     IEnumerator TeleportNumerator(Vector3 targetPos) {
