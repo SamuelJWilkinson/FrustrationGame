@@ -11,10 +11,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference jumpActionReference;
     [SerializeField] private float jumpForce = 500.0f;
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private float minJumpForce = 0.5f;
+    [SerializeField] private float maxJumpForce = 1.5f;
+    [SerializeField] private float maxHoldTime = 2f;
 
     private Rigidbody rb;
     private XROrigin xrOrigin;
     private CapsuleCollider col;
+    private float startTime;
 
     [SerializeField] private float smoothTime = 0.5f;
     private Vector3 velocity = Vector3.zero;
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
         xrOrigin = GetComponent<XROrigin>();
         col = GetComponent<CapsuleCollider>();
         jumpActionReference.action.performed += OnJump;
+        jumpActionReference.action.canceled += ReleaseJump;        
     }
 
     void Update() {
@@ -41,13 +46,20 @@ public class PlayerController : MonoBehaviour
 
     // Add jump multiplier
     private void OnJump(InputAction.CallbackContext obj) {
+        startTime = Time.time;
+    }
+
+    private void ReleaseJump(InputAction.CallbackContext obj) {
         if (!IsGrounded) return;
-        rb.AddForce(Vector3.up * jumpForce);
+        float duration = Time.time - startTime;
+        float multiplier = Mathf.Lerp(minJumpForce, maxJumpForce, Mathf.Clamp((duration / maxHoldTime), 0, 1));
+        rb.AddForce(Vector3.up * jumpForce * multiplier);
     }
 
     public void TeleportPlayer(Vector3 targetPos) {
         //Debug.Log("Player teleported");
-        this.transform.position = targetPos;
+        Vector3 heightAdjustedPosition = new Vector3(targetPos.x, targetPos.y + col.height, targetPos.z);
+        this.transform.position = heightAdjustedPosition;
         
         // I need to fix this lerping and add an effect if I want it in here
         //StartCoroutine(TeleportNumerator(targetPos));
@@ -61,5 +73,17 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
+    }
+
+    void OnCollisionStay(Collision other) {
+        if(other.gameObject.tag == "platform") {
+            transform.parent = other.transform;
+        }
+    }
+
+    void OnCollisionExit(Collision other) {
+        if(other.gameObject.tag == "platform") {
+            transform.parent = null;
+        }
     }
 }

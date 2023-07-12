@@ -318,6 +318,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "460382d4-6c26-43c4-abea-71ce6c1abc0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -496,6 +505,17 @@
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5c212222-f5a0-44ff-861e-9bc3d3d754bd",
+                    "path": "<XRController>{LeftHand}/menuButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -657,6 +677,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "JumpUp",
+                    "type": "Value",
+                    "id": "16370a49-fa35-4708-b553-ccdf0fec6fd1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Joystick Pressed",
                     "type": "Button",
                     "id": "f1ab3060-2d9c-488c-9536-bbb889e28515",
@@ -816,6 +845,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Joystick Unpressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc42268c-23fb-43ca-bc2d-27e7d45a2b69",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JumpUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
