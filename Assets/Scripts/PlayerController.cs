@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float minJumpForce = 0.5f;
     [SerializeField] private float maxJumpForce = 1.5f;
     [SerializeField] private float maxHoldTime = 2f;
+    [SerializeField] private InputActionReference respawnBowReference;
+    [SerializeField] private GameObject bow;
+    [SerializeField] private GameObject headCamera;
+    [SerializeField] private float bowSpawnDistance = 0.5f;
 
     private Rigidbody rb;
     private XROrigin xrOrigin;
@@ -22,6 +26,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float smoothTime = 0.5f;
     private Vector3 velocity = Vector3.zero;
+
+    [SerializeField] private GameMenuManager gmm;
+    [SerializeField] private float menuDropThreshold = 30f;
+    [SerializeField] private float menuTimePeriod = 120f;
+    private float menuTimer = 0;
+    private float lastGroundedHeight;
+    private bool grounded = true;
+
+    private Vector3 playerStartingPos;
     
 
     // This is a shortcut to run a function everytime you want to evaluate the bool:
@@ -35,16 +48,61 @@ public class PlayerController : MonoBehaviour
         xrOrigin = GetComponent<XROrigin>();
         col = GetComponent<CapsuleCollider>();
         jumpActionReference.action.performed += OnJump;
-        jumpActionReference.action.canceled += ReleaseJump;        
+        jumpActionReference.action.canceled += ReleaseJump;
+        respawnBowReference.action.performed += SpawnBow;
+        menuTimer = 0f;
+        playerStartingPos = transform.position;
+
     }
 
     void Update() {
         var center = xrOrigin.CameraInOriginSpacePos;
         col.center = new Vector3(center.x, col.center.y, center.z);
         col.height = xrOrigin.CameraInOriginSpaceHeight;
+
+        // When you hit the ground for the first time
+        if (IsGrounded && grounded == false) {
+            //Debug.Log("You hit the ground"); 
+            if (this.transform.position.y < (lastGroundedHeight - menuDropThreshold)) {
+                //Debug.Log("You hit the ground from very high");
+                gmm.showMenu();
+                menuTimer = 0;
+            }
+            grounded = true;
+        }
+
+        // Ground checking
+        if (IsGrounded) {
+            lastGroundedHeight = this.transform.position.y;
+        } else {
+            grounded = false;
+        }
+        
+        // Menu timer nonsense:
+        if (gmm.menuShowing == false) {
+            menuTimer += Time.deltaTime;
+        }
+        if (menuTimer > menuTimePeriod && grounded) {
+            gmm.showMenu();
+            menuTimer = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R)) {
+            TeleportPlayer(playerStartingPos);
+        }
     }
 
-    // Add jump multiplier
+    private void SpawnBow(InputAction.CallbackContext obj) {
+        GameObject[] currentBows = GameObject.FindGameObjectsWithTag("bow");
+        foreach (GameObject bow in currentBows) {
+            Destroy(bow);
+        }
+        // I want to spawn the bow right in front of the players head probably
+        Vector3 bowPos = headCamera.transform.position + (headCamera.transform.forward * bowSpawnDistance);
+
+        Instantiate(bow, bowPos, Quaternion.identity);
+    }
+
     private void OnJump(InputAction.CallbackContext obj) {
         startTime = Time.time;
     }

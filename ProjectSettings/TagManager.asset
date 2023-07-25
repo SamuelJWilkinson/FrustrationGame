@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Arrow
   - platform
+  - bow
+  - tutorial
+  - gameManager
+  - controller
+  - levelController
+  - menu
   layers:
   - Default
   - TransparentFX

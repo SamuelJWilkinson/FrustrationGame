@@ -23,9 +23,13 @@ public class LevelCreator : MonoBehaviour
     [SerializeField] private float maxSpeedScore = 5f;
     private float levelSpeedScore = 1f;
     [Range(0,1)] [SerializeField] private float maxProportionOfMovingPlatforms = 0.5f;
+    [SerializeField] private float maxPlatformScale = 1;
+    [SerializeField] private float minPlatformScale = 0.5f;
+    private Vector3 startingScale;
 
     void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
+        startingScale = platformPrefab.transform.localScale;
         GenerateLevel();
     }
     
@@ -50,10 +54,15 @@ public class LevelCreator : MonoBehaviour
         if(shouldPlatformMove(ReMap(platformCount, 0, maxPlatform, 0, maxProportionOfMovingPlatforms))) {
             PlatformBehaviour pb = platform.GetComponent<PlatformBehaviour>();
             pb.SetCircularMovement(true);
+            if (platformCount % 2 == 1) {
+                pb.rotationDirection = -1f;
+            }
             pb.movementSpeed = pb.movementSpeed * levelSpeedScore; 
         }
         
         // Need to change the scale here
+        float scale = ReMap(platformCount, 0, maxPlatform, maxPlatformScale, minPlatformScale);
+        platform.transform.localScale = new Vector3(scale * startingScale.x, scale * startingScale.y, scale * startingScale.z);
 
         // Set up for next spawn:
         if (platformCount < maxPlatform) {

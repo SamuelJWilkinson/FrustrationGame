@@ -8,7 +8,8 @@ public class PlatformBehaviour : MonoBehaviour
     // When the player is below the platform it should always be intangible
     [SerializeField] private Material intangibleMaterial;
     [SerializeField] private float yOffset = 0.1f;
-    private Material tangibleMaterial;
+    private Material[] tangibleMaterials;
+    [SerializeField] private Material[] intangibleMaterials;
     private Renderer rend;
     private MeshCollider mc;
     private GameObject player;
@@ -24,7 +25,7 @@ public class PlatformBehaviour : MonoBehaviour
         mc = GetComponent<MeshCollider>();
         player = GameObject.FindGameObjectWithTag("Player");
         rend = GetComponent<Renderer>();
-        tangibleMaterial = rend.material;
+        tangibleMaterials = rend.materials;
         startPos = transform.position;
     }
 
@@ -47,12 +48,12 @@ public class PlatformBehaviour : MonoBehaviour
 
     public void MakePlatformTangible() {
         mc.isTrigger = false;
-        rend.material = tangibleMaterial;
+        rend.materials = tangibleMaterials;
     }
 
     public void MakePlatformIntangible() {
         mc.isTrigger = true;
-        rend.material = intangibleMaterial;
+        rend.materials = intangibleMaterials;
     }
 
     private void MovePlatformCircular() {

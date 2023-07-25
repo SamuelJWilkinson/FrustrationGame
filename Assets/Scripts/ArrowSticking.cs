@@ -25,18 +25,26 @@ public class ArrowSticking : MonoBehaviour
 
         // collision.collider.GetComponent<IHittable>()?.GetHit();
         XROrigin = FindObjectOfType<XROrigin>();
+
         // I need to teleport the player to the correct height above where the arrow lands
-        XROrigin.GetComponent<PlayerController>().TeleportPlayer(transform.position);
+        // Check if the arrow has hit a target and that the arrow is oriented upwards
+        if (collision.gameObject.tag == "platform" && transform.forward.y < 0) {
+            
+            XROrigin.GetComponent<PlayerController>().TeleportPlayer(transform.position);
+        }
 
         Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider other) {
-        other.gameObject.GetComponent<PlatformBehaviour>()?.MakePlatformTangible();
+        if (other.gameObject.tag == "platform" && transform.forward.y < 0) {
 
-        XROrigin = FindObjectOfType<XROrigin>();
-        XROrigin.GetComponent<PlayerController>().TeleportPlayer(transform.position);
+            other.gameObject.GetComponent<PlatformBehaviour>()?.MakePlatformTangible();
 
+            XROrigin = FindObjectOfType<XROrigin>();
+            XROrigin.GetComponent<PlayerController>().TeleportPlayer(transform.position);
+        }
+    
         Destroy(gameObject);
     }
 
