@@ -95,7 +95,13 @@ public class GameController : MonoBehaviour
         continuousDataPoints.Clear();
         isRecording = true;
     }
-
+    public void WriteFirstToCSV(float frustrationScore, string emotion, int menuCount) {
+        isRecording = false;
+        tw = new StreamWriter(continuousData, true);
+        tw.WriteLine("-,-,-,"  + frustrationScore + "," + emotion + "," + menuCount);
+        tw.Close();
+        isRecording = true;
+    }
     public void WriteActionsToCSV(float frustrationScore, string emotion, int menuCount) {
         isRecording = false;
         if (actionDataPoints.Count > 0) {
@@ -108,6 +114,14 @@ public class GameController : MonoBehaviour
             tw2.Close();
         }
         actionDataPoints.Clear();
+        isRecording = true;
+    }
+
+    public void WriteFirstActionToCSV(float frustrationScore, string emotion, int menuCount) {
+        isRecording = false;
+        tw2 = new StreamWriter(actionData, true);
+        tw2.WriteLine("-,-,-,-,-," + frustrationScore + "," + emotion + "," + menuCount);
+        tw2.Close();
         isRecording = true;
     }
 

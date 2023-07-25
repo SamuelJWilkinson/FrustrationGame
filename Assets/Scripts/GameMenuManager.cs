@@ -64,8 +64,15 @@ public class GameMenuManager : MonoBehaviour
 
     public void SubmitButton() {
         hideMenu();
-        gc.WriteToCSV(frustrationSlider.value, highlightedToggle.name, menuShowCount);
-        gc.WriteActionsToCSV(frustrationSlider.value, highlightedToggle.name, menuShowCount);
+        if (menuShowCount == 0) {
+            gc.WriteFirstToCSV(frustrationSlider.value, highlightedToggle.name, menuShowCount);
+            gc.WriteFirstActionToCSV(frustrationSlider.value, highlightedToggle.name, menuShowCount);
+
+        } else {
+            gc.WriteToCSV(frustrationSlider.value, highlightedToggle.name, menuShowCount);
+            gc.WriteActionsToCSV(frustrationSlider.value, highlightedToggle.name, menuShowCount);
+        }
+        
         menuShowCount++;
     }
 }

@@ -375,6 +375,11 @@ PrefabInstance:
       propertyPath: highlightedToggle
       value: 
       objectReference: {fileID: 1258295439}
+    - target: {fileID: 6579924967015826837, guid: b7cbf921aac8c9e44b5e0bb3b5128806,
+        type: 3}
+      propertyPath: menuTimePeriod
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 6579924967173191508, guid: b7cbf921aac8c9e44b5e0bb3b5128806,
         type: 3}
       propertyPath: m_IsActive
